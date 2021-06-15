@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  database:
+    container_name: mongo_container
+    image: mongo
+    volumes:
+      - mongodbdata:/data/db
+    network_mode: host
+volumes:
+  mongodbdata:
