@@ -6,7 +6,7 @@ class DbListAllMoviesUseCase implements IListAllMoviesUseCase {
   constructor(private readonly loadAllMoviesRepository: ILoadAllMovieRepository ) {}
   
   async listAll({ page, limit }: ListPodcastsParams): Promise<Movie[]> {
-      const movies = await this.loadAllMoviesRepository.loadAll({
+      const movies = await this.loadAllMoviesRepository.listAll({
         page,
         limit,
       });

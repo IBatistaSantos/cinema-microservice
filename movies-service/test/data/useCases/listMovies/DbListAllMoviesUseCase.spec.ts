@@ -14,7 +14,7 @@ const mockMovie = (): Movie => ({
 
 const mockLoadAllMovieRepository = () => {
   class LoadAllMoviesRepositoryStub implements ILoadAllMovieRepository {
-    async loadAll({ page, limit }: ListPodcastsParams): Promise<Movie[]> {
+    async listAll({ page, limit }: ListPodcastsParams): Promise<Movie[]> {
       return [mockMovie()];
     }
   }
@@ -32,7 +32,7 @@ describe('DbListAllMoviesUseCase Tests', () => {
   });
 
   it('should call LoadAllMoviesRepository', async () => {
-    const findSpy = jest.spyOn(loadAllMoviesRepository, 'loadAll');
+    const findSpy = jest.spyOn(loadAllMoviesRepository, 'listAll');
 
     const page = 1;
     const limit = 10;
@@ -47,7 +47,7 @@ describe('DbListAllMoviesUseCase Tests', () => {
 
   it('should throw if LoadAllMoviesRepository throws', async () => {
     jest
-      .spyOn(loadAllMoviesRepository, 'loadAll')
+      .spyOn(loadAllMoviesRepository, 'listAll')
       .mockRejectedValueOnce(new Error());
 
     const page = 1;

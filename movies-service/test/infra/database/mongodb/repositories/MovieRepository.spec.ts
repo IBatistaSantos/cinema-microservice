@@ -30,7 +30,7 @@ describe ('MovieRepository Tests', () => {
         categories: ["anyCategory"],
       };
 
-      const movie = await MovieSchema.create(createMovieParams);
+      const movie = await movieRepository.create(createMovieParams);
 
       const result = await movieRepository.loadByName(
         createMovieParams.name
@@ -46,4 +46,67 @@ describe ('MovieRepository Tests', () => {
       expect(result).toBeUndefined();
     });
   });
+
+  describe("listAll()", () => {
+    it("should return list all movies", async () => {
+      const createMovieParams: CreateMovieParams = {
+        name: 'anyname',
+        duration: 145,
+        release_date: new Date(),
+        sinopsis: "anySinopsis",
+        categories: ["anyCategory"],
+      };
+
+      const movie = await MovieSchema.create(createMovieParams);
+
+      const result = await movieRepository.listAll({ page: 1, limit: 10 });
+
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+      expect(String(result[0].id)).toBe(String(movie._id));
+    });
+
+    it('should be able to return movies paginated', async () => {
+      const createMovieParams: CreateMovieParams = {
+        name: 'anyname',
+        duration: 145,
+        release_date: new Date(),
+        sinopsis: "anySinopsis",
+        categories: ["anyCategory"],
+      };
+
+      const movie = await MovieSchema.create(createMovieParams);
+
+      await MovieSchema.create({
+        name: 'anyname2',
+        duration: 145,
+        release_date: new Date(),
+        sinopsis: "anySinopsis2",
+        categories: ["anyCategory2"],
+      });
+
+      const result = await movieRepository.listAll({ page: 2, limit: 1 });
+
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+      expect(String(result[0].id)).toBe(String(movie._id));
   });
+  });
+
+  describe("create()",  () => {
+    it('should create movie', async () => {
+      const createMovieParams: CreateMovieParams = {
+        name: 'anyname',
+        duration: 145,
+        release_date: new Date(),
+        sinopsis: "anySinopsis",
+        categories: ["anyCategory"],
+      };
+
+      const movie = await movieRepository.create(createMovieParams);
+
+      expect(movie).toBeDefined();
+      expect(movie.id).toBeDefined();
+    });
+  })
+});
