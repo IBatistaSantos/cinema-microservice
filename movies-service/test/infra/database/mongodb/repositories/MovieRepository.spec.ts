@@ -16,7 +16,7 @@ describe ('MovieRepository Tests', () => {
     movieRepository = new MovieRepository();
   });
 
-  afterEach(async ()=> {
+  afterAll(async ()=> {
     await disconnect();
   });
 
@@ -42,7 +42,6 @@ describe ('MovieRepository Tests', () => {
     });
 
     it('should return undefined when find by name has no match', async () => {
-      jest.setTimeout(30000);
       const result = await movieRepository.loadByName('anyname');
       expect(result).toBeUndefined();
     });

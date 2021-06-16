@@ -10,7 +10,7 @@ import { MovieSchema } from "../schemas/MovieSchema";
 class MovieRepository implements ICreateMovieRepository, ILoadMovieByNameRepository {
   
   async loadByName(name: string): Promise<Movie | undefined> {
-    const movie = await MovieSchema.findOne({name});
+    const movie = await MovieSchema.findOne({ name });
     return movie ? map<Movie>(movie) : undefined;
   }
   

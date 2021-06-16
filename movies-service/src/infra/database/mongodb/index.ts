@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+import "@/main/config/env"
+
 export const connect = (
   uri = String(process.env.MONGO_URI)
 ): Promise<mongoose.Mongoose> => {
