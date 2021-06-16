@@ -26,8 +26,7 @@ export const ok = (body: any): Response => makeResponse(OK, body);
 
 export const created = (body: any): Response => makeResponse(CREATED, body);
 
-export const badRequest = (body: any): Response =>
-  makeResponse(BAD_REQUEST, body);
+export const badRequest = (body: any): Response => makeResponse(BAD_REQUEST, body);
 
 export const internalServerError = (): Response =>
   makeResponse(INTERNAL_SERVER_ERROR, { error: 'Ops, something is wrong' });

@@ -27,7 +27,6 @@ class DbCreateMovieUseCase implements ICreateMovieUseCase {
    return movie
 
   }
-
 }
 
 export {DbCreateMovieUseCase}
