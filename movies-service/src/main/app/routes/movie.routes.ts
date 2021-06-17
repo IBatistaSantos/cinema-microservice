@@ -2,11 +2,11 @@ import { Router } from "express";
 
 import {} from "../"
 import { adapterRoute } from "../adapter/express/routes";
-import { makeCreatePodcastController } from "../factories/movie";
+import { makeCreatePodcastController, makeListAllMoviesController } from "../factories/movie";
 
 
 const movieRouter = Router();
 
 movieRouter.post("/", adapterRoute(makeCreatePodcastController()));
-
-export {movieRouter}
+movieRouter.get("/", adapterRoute(makeListAllMoviesController()));
+export { movieRouter }

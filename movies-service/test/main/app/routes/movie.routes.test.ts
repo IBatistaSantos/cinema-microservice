@@ -52,4 +52,53 @@ describe('Movie Routes Tests', () => {
       expect(response.body.error).toBe('Movie already exists');
     });
   });
+
+  describe("GET/movies", () => {
+    it('should return movies with default pagination', async () => {
+      const body = {
+        name: "anyName",
+        duration: 145,
+        release_date: new Date("2020-06-16"),
+        sinopsis: "anySinopsis",
+        categories: ["anyCategory"]
+      };
+
+      await MovieSchema.create(body);
+
+      const response = await request(app).get('/api/movies');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(1);
+      expect(response.body[0].name).toBe(body.name);
+    });
+
+    it('should return movies with custom pagination', async () => {
+      const body = {
+        name: "anyName",
+        duration: 145,
+        release_date: new Date("2020-06-16"),
+        sinopsis: "anySinopsis",
+        categories: ["anyCategory"]
+      };
+
+      await MovieSchema.create(body);
+
+      await MovieSchema.create({
+        name: "anyName2",
+        duration: 145,
+        release_date: new Date("2020-06-16"),
+        sinopsis: "anySinopsis2",
+        categories: ["anyCategory"]
+      });
+
+      const response = await request(app).get('/api/movies').query({
+        page: 2,
+        limit: 1,
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(1);
+      expect(response.body[0].name).toBe(body.name);
+    });
+  });
 });
