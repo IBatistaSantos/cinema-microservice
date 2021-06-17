@@ -1,8 +1,10 @@
 import { DbCreateMovieUseCase } from "@/data/useCases/createMovie/DbCreateMovieUseCase";
 import { DbListAllMoviesUseCase } from "@/data/useCases/listMovies/DbListAllMoviesUseCase";
+import { DbListMovieByIdUseCase } from "@/data/useCases/listMovies/DbListMovieByIdUseCase";
 import { MovieRepository } from "@/infra/database/mongodb/repositories/MovieRepository";
 import { CreateMovieController } from "@/presentation/controller/CreateMovieController";
 import { ListAllMoviesController } from "@/presentation/controller/ListAllMoviesController";
+import { ListMovieByIdController } from "@/presentation/controller/ListMovieByIdController";
 
 export const makeCreateMovieUseCase = (): DbCreateMovieUseCase => {
   const movieRepository = new MovieRepository();
@@ -15,12 +17,12 @@ export const makeCreateMovieUseCase = (): DbCreateMovieUseCase => {
   return createMovieUseCase;
 };
 
-export const makeCreatePodcastController = (): CreateMovieController => {
-  const createPodcastController = new CreateMovieController(
+export const makeCreateMovieController = (): CreateMovieController => {
+  const createMovieController = new CreateMovieController(
     makeCreateMovieUseCase()
   );
 
-  return createPodcastController;
+  return createMovieController;
 };
 
 export const makeListAllMovieUseCase = (): DbListAllMoviesUseCase => {
@@ -32,4 +34,14 @@ export const makeListAllMovieUseCase = (): DbListAllMoviesUseCase => {
 export const makeListAllMoviesController = () : ListAllMoviesController => {
   const listAllMoviesController = new ListAllMoviesController(makeListAllMovieUseCase());
   return listAllMoviesController;
+}
+
+export const makeListMovieByIdUseCase = (): DbListMovieByIdUseCase => {
+  const movieRepository = new MovieRepository();
+  const listMovieByIdUseCase = new DbListMovieByIdUseCase(movieRepository)
+  return listMovieByIdUseCase;
+}
+export const makeListMovieByIdController = (): ListMovieByIdController => {
+  const listMovieByIdController = new ListMovieByIdController(makeListMovieByIdUseCase());
+  return listMovieByIdController;
 }

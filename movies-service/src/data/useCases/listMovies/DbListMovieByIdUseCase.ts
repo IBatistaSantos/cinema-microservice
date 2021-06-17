@@ -7,8 +7,8 @@ class DbListMovieByIdUseCase implements IListMovieByIdUseCase{
   constructor(private readonly loadByIdRepository: ILoadMovieByIdRepository) {}
   async loadById(id: string): Promise<Movie | undefined> {
     const movie = await this.loadByIdRepository.listById(id);
-    
-    if(!movie) {
+  
+    if(movie === undefined) {
       throw new MovieNotFoundError();
     }
     return movie
