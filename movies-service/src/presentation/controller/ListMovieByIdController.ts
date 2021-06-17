@@ -11,9 +11,7 @@ class ListMovieByIdController implements IController {
       const movies = await this.listMovieByIdUseCase.loadById(id);
       return ok(movies)
     } catch (error) {
-      console.log(error);
       if(error instanceof MovieNotFoundError) {
-     
        return badRequest({ error: error.message})
      }
       return internalServerError();

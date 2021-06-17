@@ -5,6 +5,8 @@ import request from 'supertest';
 import { connect } from '@/infra/database/mongodb';
 import { MovieSchema  } from '@/infra/database/mongodb/schemas/MovieSchema';
 import { app } from '@/main/app';
+import { Movie } from '@/domain/entities/Movie';
+import { map } from '@/infra/database/mongodb/helpers/mapper';
 
 describe('Movie Routes Tests', () => {
   beforeAll(async () => {
@@ -99,6 +101,30 @@ describe('Movie Routes Tests', () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveLength(1);
       expect(response.body[0].name).toBe(body.name);
+    });
+  });
+
+  describe("GET/movies/:id", () => {
+    it("should be return movie by id", async () => {
+      const movieCreated = await request(app)
+        .post('/api/movies')
+        .send({
+          name: "anyName",
+          duration: 145,
+          release_date: new Date("2020-06-16"),
+          sinopsis: "anySinopsis",
+          categories: ["anyCategory"],
+        });
+     
+      const response = await request(app).get(`/api/movies/${movieCreated.body.id}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.name).toBe("anyName");
+    });
+
+    it("should be return movie by id", async () => { 
+      const response = await request(app).get(`/api/movies/anyId`);
+      expect(response).toHaveProperty("error");
     });
   });
 });

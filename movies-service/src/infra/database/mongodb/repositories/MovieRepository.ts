@@ -11,9 +11,9 @@ import { MovieSchema } from "../schemas/MovieSchema";
 
 
 class MovieRepository implements ICreateMovieRepository, 
-ILoadMovieByNameRepository, 
-ILoadAllMovieRepository,
-ILoadMovieByIdRepository
+  ILoadMovieByNameRepository, 
+  ILoadAllMovieRepository,
+  ILoadMovieByIdRepository
 {
  
   async  listById(id: string): Promise<Movie | undefined> {
