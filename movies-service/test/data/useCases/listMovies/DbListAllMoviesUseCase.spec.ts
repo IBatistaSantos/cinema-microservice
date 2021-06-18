@@ -1,20 +1,19 @@
 import { ILoadAllMovieRepository } from '@/data/protocols/db/ILoadAllMoviesRepository';
 import { DbListAllMoviesUseCase } from '@/data/useCases/listMovies/DbListAllMoviesUseCase';
 import {Movie } from '@/domain/entities/Movie';
-import { ListPodcastsParams } from '@/domain/useCases/listMovies/IListAllMoviesUseCase';
 
 const mockMovie = (): Movie => ({
   id: 'anyid',
   name: "anyName",
   duration: 145,
-  release_date: new Date(),
+  release_date: new Date("2020-06-16"),
   sinopsis: "anySinopsis",
   categories: ["anyCategory"]
 });
 
 const mockLoadAllMovieRepository = () => {
   class LoadAllMoviesRepositoryStub implements ILoadAllMovieRepository {
-    async loadAll({ page, limit }: ListPodcastsParams): Promise<Movie[]> {
+    async loadAll(): Promise<Movie[]> {
       return [mockMovie()];
     }
   }
@@ -34,15 +33,9 @@ describe('DbListAllMoviesUseCase Tests', () => {
   it('should call LoadAllMoviesRepository', async () => {
     const findSpy = jest.spyOn(loadAllMoviesRepository, 'loadAll');
 
-    const page = 1;
-    const limit = 10;
+    await dbListAllMoviesUseCase.listAll();
 
-    await dbListAllMoviesUseCase.listAll({ page, limit });
-
-    expect(findSpy).toHaveBeenCalledWith({
-      page,
-      limit,
-    });
+    expect(findSpy).toHaveBeenCalled();
   });
 
   it('should throw if LoadAllMoviesRepository throws', async () => {
@@ -50,18 +43,11 @@ describe('DbListAllMoviesUseCase Tests', () => {
       .spyOn(loadAllMoviesRepository, 'loadAll')
       .mockRejectedValueOnce(new Error());
 
-    const page = 1;
-    const limit = 10;
-
-    await expect(dbListAllMoviesUseCase.listAll({ page, limit })).rejects.toThrow();
+    await expect(dbListAllMoviesUseCase.listAll()).rejects.toThrow();
   });
 
   it('should return movie list on success', async () => {
-    const page = 1;
-    const limit = 10;
-
-    const response = await dbListAllMoviesUseCase.listAll({ page, limit });
-
+    const response = await dbListAllMoviesUseCase.listAll();
     expect(response).toEqual([mockMovie()]);
   });
 });

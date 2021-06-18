@@ -7,7 +7,7 @@ import { Movie} from '@/domain/entities/Movie';
 };
 
  interface IListAllMoviesUseCase {
-  listAll({page, limit}: ListPodcastsParams): Promise<Movie[]>;
+  listAll(): Promise<Movie[]>;
 }
 
 
