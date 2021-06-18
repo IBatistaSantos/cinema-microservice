@@ -1,7 +1,5 @@
-import "dotenv/config";
 import cors from "cors";
 import express from "express";
-import { resolve } from "path";
 import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 import { connect } from "@/infra/database/mongodb";
