@@ -1,18 +1,11 @@
 import { Movie } from '@/domain/entities/Movie';
-import { IListAllMoviesUseCase, ListPodcastsParams } from '@/domain/useCases/listMovies/IListAllMoviesUseCase';
+import { IListAllMoviesUseCase } from '@/domain/useCases/listMovies/IListAllMoviesUseCase';
 import { ListAllMoviesController } from '@/presentation/controller/ListAllMoviesController';
 import {
   internalServerError,
   ok,
-  Request,
 } from '@/presentation/protocols/Http';
 
-const mockRequest = (): Request => ({
-  query: {
-    page: '1',
-    limit: '10',
-  },
-});
 
 const mockMovie = (): Movie => ({
   id: 'anyid',
@@ -25,7 +18,7 @@ const mockMovie = (): Movie => ({
 
 const mockListAllMoviesUseCase = (): IListAllMoviesUseCase => {
   class ListMoviesUseCaseStub implements IListAllMoviesUseCase {
-   async  listAll({ page, limit }: ListPodcastsParams): Promise<Movie[]> {
+   async  listAll(): Promise<Movie[]> {
       return [mockMovie()];
     }
   }
@@ -47,14 +40,9 @@ describe('ListPodcastsController Tests', () => {
   it('should call DbListAllMoviesUseCase with correct values', async () => {
     const listSpy = jest.spyOn(listAllMoviesUseCaseStub, 'listAll');
 
-    const request = mockRequest();
+    await listAllMoviesController.handle({});
 
-    await listAllMoviesController.handle(request);
-
-    expect(listSpy).toHaveBeenCalledWith({
-      page:  Number(request.query.page),
-      limit: Number(request.query.limit),
-    });
+    expect(listSpy).toHaveBeenCalled();
   });
 
   it('should return internalServerError when DbListAllMviesUseCase throws', async () => {
@@ -62,18 +50,13 @@ describe('ListPodcastsController Tests', () => {
       .spyOn(listAllMoviesUseCaseStub, 'listAll')
       .mockRejectedValueOnce(new Error());
 
-    const request = mockRequest();
-
-    const result = await listAllMoviesController.handle(request);
+    const result = await listAllMoviesController.handle({});
 
     expect(result).toEqual(internalServerError());
   });
 
   it('should return ok with movies on success', async () => {
-    const request = mockRequest();
-
-    const result = await listAllMoviesController.handle(request);
-
+    const result = await listAllMoviesController.handle({});
     expect(result).toEqual(ok([mockMovie()]));
   });
 });
