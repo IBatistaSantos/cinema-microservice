@@ -22,10 +22,9 @@ class DbCreateMovieUseCase implements ICreateMovieUseCase {
     duration,
     release_date,
     categories,
-   })
+   });
 
    return movie
-
   }
 }
 

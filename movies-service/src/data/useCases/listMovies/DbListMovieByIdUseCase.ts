@@ -8,9 +8,10 @@ class DbListMovieByIdUseCase implements IListMovieByIdUseCase{
   async loadById(id: string): Promise<Movie | undefined> {
     const movie = await this.loadByIdRepository.listById(id);
   
-    if(movie === undefined) {
+    if(!movie) {
       throw new MovieNotFoundError();
     }
+    
     return movie
   }
 }

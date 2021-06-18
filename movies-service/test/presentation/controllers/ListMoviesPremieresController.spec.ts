@@ -26,7 +26,7 @@ const mockListMoviesPremieresUseCase = (): IListMoviesPremieresUseCase => {
   return new ListMoviesUseCaseStub();
 };
 
-describe('ListPodcastsController Tests', () => {
+describe('ListMoviesPremieresController Tests', () => {
   let listMoviesPremieresController: ListMoviePremieresController;
   let listMoviesPremieresUseCaseStub: IListMoviesPremieresUseCase;
 

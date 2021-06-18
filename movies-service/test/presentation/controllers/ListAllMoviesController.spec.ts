@@ -26,7 +26,7 @@ const mockListAllMoviesUseCase = (): IListAllMoviesUseCase => {
   return new ListMoviesUseCaseStub();
 };
 
-describe('ListPodcastsController Tests', () => {
+describe('ListAllMoviesController Tests', () => {
   let listAllMoviesController: ListAllMoviesController;
   let listAllMoviesUseCaseStub: IListAllMoviesUseCase;
 
@@ -45,7 +45,7 @@ describe('ListPodcastsController Tests', () => {
     expect(listSpy).toHaveBeenCalled();
   });
 
-  it('should return internalServerError when DbListAllMviesUseCase throws', async () => {
+  it('should return internalServerError when DbListAllMoviesUseCase throws', async () => {
     jest
       .spyOn(listAllMoviesUseCaseStub, 'listAll')
       .mockRejectedValueOnce(new Error());
