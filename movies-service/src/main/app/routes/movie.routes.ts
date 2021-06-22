@@ -1,7 +1,11 @@
 import { Router } from "express";
 
 import { adapterRoute } from "../adapter/express/routes";
-import { makeCreateMovieController, makeListAllMoviesController, makeListMovieByIdController, makeListMoviePremieresController } from "../factories/movie";
+import {
+   makeCreateMovieController, 
+  makeListAllMoviesController, 
+  makeListMovieByIdController, 
+  makeListMoviePremieresController } from "../factories/movie";
 
 const movieRouter = Router();
 
